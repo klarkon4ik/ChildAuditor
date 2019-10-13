@@ -1,0 +1,4 @@
+<design:component>
+    <design:attribute name="widgetBodyHeight" label="Widget Height" max="900" min="200" default="500"/>
+    <design:attribute name="widgetTitle" label="Widget Title" default="Child Auditor"/>
+</design:component>

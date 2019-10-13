@@ -1,0 +1,11 @@
+.THIS.widget-wrapper {
+    position: relative;
+}
+.THIS ul {
+    min-height: 200px;
+    height: auto;
+}
+.THIS li>span {
+    position: relative;
+    display: flex;
+}

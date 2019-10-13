@@ -1,0 +1,66 @@
+<aura:component controller="ChildAuditController" implements="flexipage:availableForRecordHome,force:hasRecordId" access="global" >
+    <lightning:notificationsLibrary aura:id="notifLib"/>
+    
+    <aura:attribute name="widgetBodyHeight"
+                    type="Integer"
+                    default="500"
+                    access="global"
+                    description="Height of the component wrapping content provided by design attributes in App Builder."/>
+
+    <aura:attribute name="widgetTitle"
+                    type="String"
+                    default="Child Auditor"
+                    access="global"
+                    description="Title of the lightning:card component wrapping content."/>
+
+    <aura:attribute name="childData"
+                    type="Object[]"
+                    access="global"
+                    description="List of the child information wrappers."/>
+                    
+    <!-- Events -->
+
+    <aura:handler name="init" value="{!this}" action="{!c.onInit}"/>
+
+    <!-- Markup -->
+
+    <div class="widget-wrapper">
+        <lightning:spinner aura:id="spinner" variant="brand" alternativeText="Loading..."/>
+
+        <lightning:card iconName="{!( empty(v.widgetTitle) ? '' : 'standard:file' )}" class="slds-card_boundary">
+            <aura:set attribute="actions">
+                <lightning:button variant="brand" label="Refresh" title="Refresh" onclick="{!c.refresh}" />
+            </aura:set>
+            <aura:set attribute="title">
+                <span class="slds-card__header-title">
+                    <span class="slds-card__header-link">
+                        {!v.widgetTitle}
+                    </span>
+                </span>
+            </aura:set>
+
+            <div aura:id="widgetBody" class="slds-scrollable">
+                <ul class="slds-has-dividers_top-space slds-scrollable">
+                    <aura:iteration items="{!v.childData}" var="child">
+                        <li class="slds-item">
+                            <span>
+                                {!child.pluralLabel}
+                                <span class="{! 'slds-badge slds-col_bump-left ' + if( greaterthan( child.count, 0 ), 'slds-theme_success', '' )}">
+                                    <span class="slds-assistive-text">:</span>
+                                    {!child.message ? child.message : child.count}
+                                </span>
+                            </span>
+                        </li>
+                    </aura:iteration>
+                </ul>
+                
+                <aura:if isTrue="{!!(v.childData.length)}">
+                    <div class="slds-text-align_center">
+                        <span>There is no related info available.</span>
+                    </div>
+                </aura:if>
+            </div>
+
+        </lightning:card>
+    </div>
+</aura:component>
